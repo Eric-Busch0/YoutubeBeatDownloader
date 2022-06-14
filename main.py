@@ -6,7 +6,7 @@ import os
 from pytube import YouTube
 import re
 
-ENDPOINT = 'https://www.youtube.com/watch?v=iywDcfW0bJ8'
+ENDPOINT = '' #your enpoint here
 
 def do_download(endpoint):
     try:
