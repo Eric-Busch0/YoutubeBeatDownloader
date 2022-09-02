@@ -1,12 +1,9 @@
-# from infi.devicemanager import DeviceManager
-# import usb.core
-# import usb.util
-# import libusb
-import os
+
+import os, sys
 from pytube import YouTube
 import re
 
-ENDPOINT = '' #your enpoint here
+ENDPOINT = 'https://www.youtube.com/watch?v=382mKYYNhY0&list=PL2ntw5yLXvVUoUlbNRb4dkL-EwTtycPFD&index=24' #your enpoint here
 
 def do_download(endpoint):
     try:
@@ -20,22 +17,23 @@ def do_download(endpoint):
         video = yt.streams.filter(only_audio=True).first()
         
         outfile = video.download()
-        
-        
-        
+
         if not os.path.exists(dest):
             os.rename(outfile,dest)
         else:
             print('Cannot copy to that location, already exists!')
-    except:
-        print('An exception has occured')
+    except Exception as e:
+        print(str(e))
 
     
-def main():
+def main(argv):
 
-    do_download(ENDPOINT)
+    print(argv)
+    # do_download(ENDPOINT)
+    for enpoint in argv:
+        do_download(enpoint)
 
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
