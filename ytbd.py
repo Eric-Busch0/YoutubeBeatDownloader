@@ -1,46 +1,46 @@
-
 import os, sys
 from pytube import YouTube
-# import rex
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument('-u','--url', action='extend', nargs='*', help='URL to download instrumental from')
-parser.add_argument('-a','--analyze', action='extend', nargs='*')
+import aubio
 
+class YTBD:
 
-
-args = parser.parse_args()
-
-# print(args.url)
-
-# ENDPOINT = 'https://www.youtube.com/watch?v=382mKYYNhY0&list=PL2ntw5yLXvVUoUlbNRb4dkL-EwTtycPFD&index=24' #your enpoint here
-
-# def do_download(endpoint):
-#     try:
-
-#         yt = YouTube(endpoint)
-#         dest = yt.streams[0].title + '.mp3' 
-#         dest = dest.replace('\"', '')
-#         dest = dest.replace('.mp4','')
-#         dest = dest.replace('*', '')
-
-#         video = yt.streams.filter(only_audio=True).first()
-        
-#         outfile = video.download()
-
-#         if not os.path.exists(dest):
-#             os.rename(outfile,dest)
-#         else:
-#             print('Cannot copy to that location, already exists!')
-#     except Exception as e:
-#         print(str(e))
-
+    def __init__(self, url='',filePath='') -> None:
+        self.url = url
+        self.filePath = filePath
     
-def main():
+    def download(self):
+        
+        if self.url == '':
+            raise Exception('URL cannot be empty!')
+        print(f'Downloading {self.url}')
+        try:
 
-   pass
+            yt = YouTube(self.url)
 
 
+            dest = yt.streams[0].title + '.mp3' 
+            dest = dest.replace('\"', '')
+            dest = dest.replace('.mp4','')
+            dest = dest.replace('*', '')
 
-if __name__ == "__main__":
-    main()
+            video = yt.streams.filter(only_audio=True).first()
+        
+            outfile = video.download()
+
+            if not os.path.exists(dest):
+                os.rename(outfile,dest)
+                self.filePath = dest
+            else:
+                raise Exception('Cannot copy to that location, already exists!')
+
+        except Exception as e:
+            print(str(e))
+
+
+    def analyze(self):
+
+        if os.path.exists(self.filePath):
+            raise Exception(f'File {self.filePath} does not exist!')
+
+
+        pass
